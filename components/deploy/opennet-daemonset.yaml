@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: opennet
+  namespace: kube-system
+  labels:
+    tier: node
+    app: opennet
+spec:
+  selector:
+    matchLabels:
+      name: opennet
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        tier: node
+        app: opennet
+        name: opennet
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      tolerations:
+        - operator: Exists
+          effect: NoSchedule
+      containers:
+        - name: opennet
+          image: ankrnetwork/opennet:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "50Mi"
+            limits:
+              cpu: "100m"
+              memory: "50Mi"
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: cnibin
+              mountPath: /host/opt/cni/bin
+            - name: communication-path
+              mountPath: /tmp
+            - mountPath: /ssl
+              name: secret-etcd-certs
+              readOnly: true
+      volumes:
+        - name: cnibin
+          hostPath:
+            path: /opt/cni/bin
+        - name: communication-path
+          hostPath:
+            path: /tmp
+        - name: secret-etcd-certs
+          secret:
+            secretName: etcd-certs

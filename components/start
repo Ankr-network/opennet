@@ -1,0 +1,8 @@
+#!/bin/sh
+
+#step 1: copy the opennet execute program to the default cni path /opt/cni/bin
+rm /host/opt/cni/bin/opennet
+cp /root/opennet /host/opt/cni/bin
+
+#step 2: run the daemon service program
+/root/components -debug
