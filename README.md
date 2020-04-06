@@ -24,11 +24,7 @@ Opennet is an address assignment plugin developed based on Multus-cni
 
 ## How to 
 
-1. install `
-
-   [multus-cni]: https://github.com/intel/multus-cni
-
-   ` follow it's doc
+1. install [multus-cni]: https://github.com/intel/multus-cni	"multus-cni" follow it's doc
 
 2. install `opennet`
 
