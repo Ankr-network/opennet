@@ -32,10 +32,12 @@ Opennet is an address assignment plugin developed based on Multus-cni
 
    ```bash
     kubectl apply -f daemonset-install.yaml
+    # create etcd secret, please modify pem file name
+ kubectl  -n kube-system create secret generic etcd-certs --from-file=/etc/etcd/ssl/etcd.pem --from-file=/etc/etcd/ssl/etcd-key.pem --from-file=/etc/etcd/ssl/etcd-root-ca.pem
    ```
 
    b. configure `CNI` net configuration
-
+   
    ```yaml
    apiVersion: "k8s.cni.cncf.io/v1"
    kind: NetworkAttachmentDefinition
@@ -74,11 +76,11 @@ Opennet is an address assignment plugin developed based on Multus-cni
          ]
        }
        }
-   }'
+}'
    ```
 
    c. configure every device number into `/etc/cni/net.d/opennet-devno`
-
+   
    if every IP segment fit all machine, then can set the `opennet-devno` as the same device number.
 
 ## Contributor
