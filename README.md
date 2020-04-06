@@ -1,4 +1,4 @@
-# `Opennet`
+# Opennet
 ## **Movitation**
 
 Our product design requires `Kubernetes` to support unique IP address segments, such as public network IPs, and these unique IP address segments can only be bound to specified machines. We searched for many CNI plugins in the community, and did not find a suitable one, so we decided Develop new CNI plugin to meet our application scenarios.
@@ -32,14 +32,17 @@ Opennet is an address assignment plugin developed based on Multus-cni
 
    ```bash
     kubectl apply -f components/deploy/daemonset-install.yaml
-    # create etcd secret, please modify pem file name
- kubectl  -n kube-system create secret generic etcd-certs --from-file=/etc/etcd/ssl/etcd.pem --from-file=/etc/etcd/ssl/etcd-key.pem --from-file=/etc/etcd/ssl/etcd-root-ca.pem
    ```
 
-   b. configure `CNI` net configuration
+   create etcd secret, please modify `pem file name`
+
+   ```bash
+    kubectl  -n kube-system create secret generic etcd-certs --from-file=/etc/etcd/ssl/etcd.pem --from-file=/etc/etcd/ssl/etcd-key.pem --from-file=/etc/etcd/ssl/etcd-root-ca.pem
+   ```
+   
+   b. configure `CNI` net configuration, save to `cni.yaml`
    
    ```yaml
-   # save to cni.yaml
    apiVersion: "k8s.cni.cncf.io/v1"
    kind: NetworkAttachmentDefinition
    metadata:
@@ -75,13 +78,17 @@ Opennet is an address assignment plugin developed based on Multus-cni
            "8.8.8.8",
            "8.8.4.4"
          ]
-       }
+    }
     }
    }'
-
-   kubectl -n kube-system apply -f cni.yaml
    
    ```
+   
+   ```bash
+   kubectl -n kube-system apply -f cni.yaml
+   ```
+   
+   
    
    c. configure every device number into `/etc/cni/net.d/opennet-devno`
    
