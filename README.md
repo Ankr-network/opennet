@@ -1,5 +1,5 @@
 # Opennet
-## **Movitation**
+## **Motivation**
 
 Our product design requires `Kubernetes` to support unique IP address segments, such as public network IPs, and these unique IP address segments can only be bound to specified machines. We searched for many CNI plugins in the community, and did not find a suitable one, so we decided Develop new CNI plugin to meet our application scenarios.
 
